@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1f6f4a">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>パドック チェックシート v3（3項目版）</title>
+<style>
+:root{--bg:#f6f7f4;--fg:#1d2420;--mut:#66706a;--line:#d6dbd5;--card:#fff;--acc:#1f6f4a;--hd:#e9eee9;--s0:#1f7a4d;--s1:#b7791f;--s2:#c0392b;--b0:#eef6ff;--b1:#fff6e8;--b2:#f3effa;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141816;--fg:#e8ece9;--mut:#9aa59e;--line:#34403a;--card:#1d2420;--acc:#4fbf8a;--hd:#252e29;--s0:#4fc98c;--s1:#e0a84a;--s2:#ef6b5c;--b0:#1b2733;--b1:#33291a;--b2:#2a2438;color-scheme:dark}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,-apple-system,"Noto Sans JP",sans-serif}
+.w{padding:10px}
+h1{font-size:17px;margin:4px 0 8px}
+.tabs{display:flex;gap:6px;margin-bottom:8px}
+.tabs button{flex:1;padding:9px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;font-size:14px}
+.tabs button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+input,select,button{font:inherit;color:var(--fg)}
+input,select{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-width:0}
+.btn{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:6px 10px}
+.btn.p{background:var(--acc);color:#fff;border-color:var(--acc)}
+.btn.d{color:var(--s2)}
+.tw{overflow:auto;max-height:68vh;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+table{border-collapse:separate;border-spacing:0;font-size:13px}
+th,td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:0;text-align:center}
+thead th{position:sticky;top:0;background:var(--hd);z-index:2}
+thead tr:nth-child(2) th{top:26px}
+.sc{position:sticky;left:0;z-index:3;background:var(--card);width:118px;min-width:118px;max-width:118px;text-align:left;padding:3px 5px}
+thead .sc{background:var(--hd);z-index:4}
+.v{writing-mode:vertical-rl;height:84px;padding:4px 0;font-weight:500;font-size:12px;letter-spacing:1px}
+.gh{height:26px;font-size:12px}
+.g0{background:var(--b0)}.g1{background:var(--b1)}.g2{background:var(--b2)}
+td.c,td.ov{width:34px;height:40px;font-size:17px;font-weight:700;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+td.s0{color:var(--s0)}td.s1{color:var(--s1)}td.s2{color:var(--s2)}td.s-1{color:var(--mut);font-weight:400}
+td.ov{width:44px;border-left:2px solid var(--acc)}
+.nm{width:70px}.no{width:30px;text-align:center;padding:4px 2px}.mm{width:110px;margin:2px}
+.sc input{padding:3px 4px;font-size:13px}
+.tot{font-size:12px;color:var(--mut)}
+.tot b{color:var(--fg);font-size:14px}
+.x{border:0;background:none;color:var(--mut);padding:0 4px}
+.hint{font-size:12px;color:var(--mut);margin:6px 2px}
+.gi{margin-bottom:8px}.gi h3{margin:0 0 2px;font-size:14px}
+.gi p{margin:2px 0;font-size:13px}
+.ok{color:var(--s0);font-weight:600}.ng{color:var(--s2);font-weight:600}.vd{color:var(--mut);font-size:12px}
+.gt{font-weight:700;font-size:15px;margin:12px 0 6px;padding:4px 8px;border-radius:6px}
+ul{margin:4px 0;padding-left:20px}
+.hide{display:none}
+.big td.c,.big td.mk{width:64px;height:52px;font-size:24px}
+.sk{position:sticky;left:118px;z-index:3;background:var(--card);border-right:2px solid var(--acc)}
+thead .sk{background:var(--hd);z-index:4}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:14px;padding:4px 9px;margin:2px;font-size:12px}
+td.mk{width:40px;height:40px;font-size:16px;font-weight:700;cursor:pointer;user-select:none}
+.x{padding:4px 8px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>🐎 パドック チェックシート（3項目版）</h1>
+<div class="tabs"><button id="t1" class="on">シート</button><button id="t3">履歴</button><button id="t2">観点ガイド</button></div>
+<div id="hp" class="card hide"></div>
+<datalist id="hl"></datalist>
+
+<div id="p1">
+  <div class="card">
+    <div class="row"><select id="sel" style="flex:1"></select><button class="btn p" id="new">＋新規</button><button class="btn d" id="delr">削除</button></div>
+    <div class="row">
+      <input type="date" id="date">
+      <input id="venue" list="vl" placeholder="競馬場" style="width:96px">
+      <input id="rno" type="number" inputmode="numeric" min="1" max="12" placeholder="R" style="width:56px">
+      <input id="rname" placeholder="レース名(任意)" style="flex:1;min-width:110px">
+    </div>
+    <datalist id="vl"><option value="札幌"><option value="函館"><option value="福島"><option value="新潟"><option value="東京"><option value="中山"><option value="中京"><option value="京都"><option value="阪神"><option value="小倉"><option value="地方"><option value="海外"></datalist>
+    <div class="row" style="margin:0">頭数 <input id="cnt" type="number" inputmode="numeric" min="1" max="18" value="12" style="width:60px"><button class="btn" id="mk">頭数分を作成</button><button class="btn" id="add1">＋1頭</button></div>
+  </div>
+<div class="tw"><table id="tb"></table></div>
+  <div class="hint">マスをタップ：初期は全て○（問題なし）。タップで △ 気になる(−1) → × 不安(−2) → ○ に戻る。馬名下の数値は「満点−減点／満点」。印（左の固定列）は ◎○▲△☆消 の順に切り替え。馬名下の📊で同じ馬名の過去記録と比較、✕は2回タップで削除。入力は自動保存（この端末のブラウザ内）。</div>
+</div>
+
+<div id="p3" class="hide"><div class="row"><input id="hq" placeholder="馬名・競馬場・レース名で検索" style="flex:1"></div><div id="hl2"></div>
+<div class="card"><b>バックアップ</b><div class="hint">端末の変更やブラウザのデータ削除に備えて、定期的に書き出して保管してください。</div><div class="row"><button class="btn" id="bx">書き出し</button><button class="btn" id="bi">読み込み（追加）</button></div><textarea id="bt" rows="4" style="width:100%;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px" placeholder="書き出すとここにデータが出ます。コピーしてメモ等に保存。復元は、ここに貼り付けて「読み込み」"></textarea></div>
+</div>
+<div id="p2" class="hide"></div>
+</div>
+
+<script>
+var G=[
+{n:'馬体',c:0,it:[
+['毛艶','毛艶・皮膚','毛が短くツヤがあり、光を弾く','パサつく・粗い、冬毛が残る、皮膚が厚ぼったい','季節で差が出る。同じ時期の他馬と比べる'],
+['張り','筋肉の張り・メリハリ','筋肉に張りがあり、肩・腹・トモのラインが引き締まる','全体にゆるく見える、ボリューム不足、筋肉がぼやける',''],
+['トモ','トモ（後躯）','後ろ・横から見て腰〜もも〜尻が丸く厚い','薄い、尻が落ちて見える、筋肉が削げている',''],
+['腹回り','腹回り・体型','腹が適度に巻き上がり胴に厚みがある、均整が取れている','ぽってり太め（仕上がり不足）／腹がつり上がり細すぎ（減りすぎ）','馬体重の増減と合わせて判断'],
+['首背','首・背腰','首が適度に太く長い、背中のラインが真っ直ぐで硬くない','首が細く力がない、背中が落ち込む、腰が甘い',''],
+['脚元','脚元','腱・膝・飛節がすっきり、左右差がない','腫れ・熱感、包帯やテーピングが目立つ、左右で脚の出方が違う','腫れ・熱感は映像では判断が難しい']]},
+{n:'歩様',c:1,it:[
+['歩幅','歩幅・踏み込み','後肢が前肢の足跡を越えて深く踏み込む、歩幅が大きい','歩幅が小さくちょこちょこ歩く、踏み込みが浅い',''],
+['リズム','リズム・左右バランス','テンポが一定で左右均等、スムーズ','ぎこちない、一歩ごとに頭が沈む（跛行の気配）、左右で歩幅が違う','正面・後ろからも見ると分かりやすい'],
+['前脚','前脚の出・肩の動き','肩が柔らかく、前脚が伸びやかに出る','前脚が窮屈、外に回す、ひっかくような動き',''],
+['後肢','後肢の送り・蹴り','後肢が地面をしっかり捉え、力強く送り出す','後肢が流れる、引きずる、蹴りが弱い',''],
+['首使','首の使い方','首を上下にゆったり使いリラックスして歩く','首が硬く固まる、頭が高い、首を振り上げる','']]},
+{n:'気配・精神',c:2,it:[
+['落着','落ち着き','周囲に動じず一定のペースで歩く','イレ込み、チャカつく、立ち上がる、横にそれる','レース慣れしていない若駒は割り引く'],
+['発汗','発汗','汗なし、または軽く湿る程度','首・内股・腹に白く泡立つ汗、したたる汗','暑い日・汗かきの馬は割り引く'],
+['目耳','目・耳','目に力があり、耳が適度に動いて周囲に気を配る','白目が見える、耳を絞り続ける、ボーッとして反応が薄い','映像では見えにくい'],
+['気合','気合・活気','前向きでキビキビ、覇気がある','覇気がなく無気力、ダラダラ歩く','気合乗りと入れ込みは別物'],
+['口尾','口・尾・仕草','口元が静か、尾も自然','口をしきりに動かす、舌を出す、尾を激しく振る',''],
+['曳手','曳き手との関係','間隔が一定で素直に従う','引っ張る、ぐいぐい前に出る、曳き手を振り回す、暴れる','']]}
+];
+var N=G.length;var MAXS=N*2;
+var SYM=['○','△','×'],OVL=['○ 買い','△ 保留','× 消し'];
+var K='paddock-checksheet-v3',S={cur:null,races:{}};
+try{var raw=localStorage.getItem(K);if(raw)S=JSON.parse(raw)}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function normS(o){var s=(o.s||[]).map(function(v){return v<0?0:v});if(s.length===17){var m=function(a,b){var x=0;for(var i=a;i<b;i++)if(s[i]>x)x=s[i];return x};s=[m(0,6),m(6,11),m(11,17)]}while(s.length<N)s.push(0);o.s=s.slice(0,N)}
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function today(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function newHorse(n){var s=[];for(var i=0;i<N;i++)s.push(0);return{n:n,name:'',s:s,ov:-1,mk:-1,memo:''}}
+function newRace(){var id=Date.now().toString(36);var last=S.races[S.cur];
+  S.races[id]={id:id,date:last?last.date:today(),venue:last?last.venue:'',no:'',name:'',horses:[]};S.cur=id;save()}
+function R(){return S.races[S.cur]}
+function sym(v){return v<0?'·':SYM[v]}
+function total(h){var t=0,k=0;h.s.forEach(function(v){if(v>0)t+=v;if(v>=0)k++});return[t,k]}
+function totHtml(h){return '<b>'+(MAXS-total(h)[0])+'</b>/'+MAXS}
+
+function selHtml(){
+  var ids=Object.keys(S.races).sort(function(a,b){var x=S.races[a],y=S.races[b];return x.date<y.date?1:x.date>y.date?-1:(+y.no||0)-(+x.no||0)});
+  $('sel').innerHTML=ids.map(function(id){var r=S.races[id];
+    return '<option value="'+id+'"'+(id===S.cur?' selected':'')+'>'+esc(r.date.slice(5).replace('-','/')+' '+(r.venue||'—')+' '+(r.no?r.no+'R':'')+' '+r.name)+'</option>'}).join('');
+}
+function head(){var r=R();$('date').value=r.date;$('venue').value=r.venue;$('rno').value=r.no;$('rname').value=r.name}
+function table(){
+  var r=R(),h='<thead><tr><th class="sc gh">馬</th><th class="gh sk"><div class="v">印</div></th>';
+  G.forEach(function(g){h+='<th class="v g'+g.c+'">'+g.n+'</th>'});
+  h+='<th class="gh">備考</th></tr></thead><tbody>';
+  r.horses.forEach(function(o,i){
+    h+='<tr data-r="'+i+'"><td class="sc"><div><input class="no" data-f="n" data-r="'+i+'" value="'+esc(o.n)+'" inputmode="numeric"> <input class="nm" data-f="name" data-r="'+i+'" value="'+esc(o.name)+'" placeholder="馬名" list="hl"></div><div class="tot"><span class="tt">'+totHtml(o)+'</span> <button class="x" data-h="'+i+'">📊</button><button class="x" data-del="'+i+'">✕</button></div></td><td class="mk sk" data-r="'+i+'" data-mk="1">'+mkS(o.mk)+'</td>';
+    G.forEach(function(g,j){h+='<td class="c s'+o.s[j]+'" data-r="'+i+'" data-k="'+j+'">'+sym(o.s[j])+'</td>'});
+    
+    h+='<td><input class="mm" data-f="memo" data-r="'+i+'" value="'+esc(o.memo)+'" placeholder="一言"></td></tr>';
+  });
+  if(!r.horses.length)h+='<tr><td class="sc" colspan="'+(N+3)+'" style="padding:14px">「頭数分を作成」で馬を追加してください</td></tr>';
+  $('tb').className='big';$('tb').innerHTML=h+'</tbody>';
+}
+function guide(){
+  var h='<div class="card"><b>採点の考え方（減点方式）</b><ul><li>○ 問題なし＝0 ／ △ 気になる＝−1 ／ × 不安＝−2</li><li>馬名下の数値は「満点−減点／満点」（満点は大項目3つ×2点＝6点）。目安であり、最終判断は印で付ける</li><li>初期状態は全て○。各大項目で「気になる点があれば△、重い問題や複数の不安があれば×」とします</li></ul></div>';
+  var j=0;G.forEach(function(g){
+    h+='<div class="gt g'+g.c+'">'+g.n+'</div><div class="hint">以下は、この大項目を判断するときの小さな見どころ</div>';
+    g.it.forEach(function(it){
+      h+='<div class="card gi"><h3>'+it[0]+'：'+it[1]+'</h3><p><span class="ok">○</span> '+it[2]+'</p><p><span class="ng">× </span>'+it[3]+'</p>'+(it[4]?'<p class="vd">補足：'+it[4]+'</p>':'')+'</div>'});
+  });
+  h+='<div class="gt" style="background:var(--hd)">共通の心得</div><div class="card"><ul>'
+   +'<li>大項目ごとに、小さな見どころの総合で判断する（1つ気になっても他が良ければ○でよい）</li>'
+   +'<li>周回が複数あれば、序盤と終盤で変化を見る。後半の方が仕上がりが分かりやすい</li>'
+   +'<li>前走の写真・映像、馬体重の増減と比べる。「その馬にとっての良し悪し」が基準</li>'
+   +'<li>気温・季節・馬場で汗や毛艶の見え方は変わる。他馬との相対評価も併用する</li>'
+   +'<li>初出走・若駒・気性難の馬は、落ち着きの減点を割り引く</li>'
+   +'<li>映像：カメラの角度で歩幅・脚元・目耳は判断しにくい。見えない項目は○のままにする（判断材料がないものは減点しない）</li>'
+   +'<li>現地：横・前・後ろと角度を変えて見る。馬の左右差は正面・後ろから見ると分かりやすい</li>'
+   +'<li>地方・海外：パドックが小さく周回が短い、馬場や気候が違うなど条件差がある。基準を絶対視せず、そのレース内の相対評価を重視する</li>'
+   +'</ul></div>';
+  $('p2').innerHTML=h;
+}
+function all(){selHtml();head();table();hlist()}
+
+$('sel').onchange=function(){S.cur=this.value;save();all()};
+$('new').onclick=function(){newRace();all()};
+var armR=null;$('delr').onclick=function(){var b=this;if(!armR){armR=setTimeout(function(){armR=null;b.textContent='削除'},3000);b.textContent='もう一度で削除';return}clearTimeout(armR);armR=null;b.textContent='削除';delete S.races[S.cur];var k=Object.keys(S.races);if(!k.length)newRace();else S.cur=k[0];save();all()};
+[['date','date'],['venue','venue'],['rno','no'],['rname','name']].forEach(function(p){
+  $(p[0]).oninput=function(){R()[p[1]]=this.value;save()};
+  $(p[0]).onchange=function(){selHtml()}});
+$('mk').onclick=function(){var r=R(),n=Math.min(Math.max(+$('cnt').value||0,0),24);while(r.horses.length<n)r.horses.push(newHorse(r.horses.length+1));save();table()};
+$('add1').onclick=function(){var r=R();r.horses.push(newHorse(r.horses.length+1));save();table()};
+$('tb').onclick=function(e){
+  var t=e.target,r=R();
+  if(t.dataset.h!==undefined){showHist(r.horses[+t.dataset.h].name,r.id);return}
+  if(t.dataset.del!==undefined){if(arm===t){arm=null;r.horses.splice(+t.dataset.del,1);save();table()}else{arm=t;t.textContent='削除?';t.style.color='var(--s2)';setTimeout(function(){if(arm===t){arm=null;t.textContent='✕';t.style.color=''}},3000)}return}
+  if(t.tagName!=='TD'||t.dataset.r===undefined)return;
+  var i=+t.dataset.r,o=r.horses[i];
+  if(t.dataset.mk){var m=(o.mk==null?-1:o.mk)+1;o.mk=m>=MK.length?-1:m;t.textContent=mkS(o.mk)}
+  else if(t.dataset.k!==undefined){var k=+t.dataset.k;o.s[k]=o.s[k]>=2?0:o.s[k]+1;t.className='c s'+o.s[k];t.textContent=sym(o.s[k]);
+    t.parentNode.querySelector('.tt').innerHTML=totHtml(o)}
+  else return;
+  save();
+};
+$('tb').oninput=function(e){var t=e.target;if(t.dataset.f===undefined)return;R().horses[+t.dataset.r][t.dataset.f]=t.value;save()};
+var MK=['◎','○','▲','△','☆','消'],arm=null;
+function mkS(v){return v==null||v<0?'·':MK[v]}
+function rl(r){return r.date.slice(2).replace(/-/g,'/')+' '+(r.venue||'—')+' '+(r.no?r.no+'R':'')}
+function hlist(){var m={};Object.keys(S.races).forEach(function(id){S.races[id].horses.forEach(function(o){var n=(o.name||'').trim();if(n)m[n]=1})});$('hl').innerHTML=Object.keys(m).map(function(n){return '<option value="'+esc(n)+'">'}).join('')}
+function showHist(name,rid){
+  name=(name||'').trim();var hp=$('hp');hp.className='card';
+  if(!name){hp.innerHTML='<div class="row"><span>馬名を入力すると、同じ馬名の過去記録と比較できます。</span><button class="btn" id="hc" style="margin-left:auto">閉じる</button></div>';window.scrollTo(0,0);return}
+  var rec=[];Object.keys(S.races).forEach(function(id){var r=S.races[id];r.horses.forEach(function(o){if((o.name||'').trim()===name)rec.push({r:r,o:o,cur:id===rid})})});
+  rec.sort(function(a,b){return a.r.date<b.r.date?-1:a.r.date>b.r.date?1:(+a.r.no||0)-(+b.r.no||0)});
+  var h='<div class="row"><b>'+esc(name)+'：'+rec.length+'件の記録</b><button class="btn" id="hc" style="margin-left:auto">閉じる</button></div>';
+  if(rec.length<2)h+='<div class="hint">他の記録はまだありません。同じ馬名（表記が完全に同じ）で別レースを記録すると比較できます。</div>';
+  h+='<div class="tw" style="max-height:60vh"><table><thead><tr><th class="sc gh">日付・場・R</th>';
+  G.forEach(function(g){h+='<th class="v g'+g.c+'">'+g.n+'</th>'});
+  h+='<th class="v">評価</th><th class="v">印</th></tr></thead><tbody>';
+  rec.forEach(function(x){var o=x.o,t=total(o)[0];
+    h+='<tr><td class="sc">'+esc(rl(x.r))+(x.cur?' ◀今回':'')+(o.memo?'<div class="tot">'+esc(o.memo)+'</div>':'')+'</td>';
+    o.s.forEach(function(v){h+='<td class="c s'+v+'" style="cursor:default">'+sym(v)+'</td>'});
+    h+='<td>'+(MAXS-t)+'/'+MAXS+'</td><td class="mk" style="cursor:default">'+mkS(o.mk)+'</td></tr>'});
+  hp.innerHTML=h+'</tbody></table></div>';window.scrollTo(0,0)}
+function histList(){
+  var q=$('hq').value.trim().toLowerCase(),h='',ids=Object.keys(S.races).sort(function(a,b){var x=S.races[a],y=S.races[b];return x.date<y.date?1:x.date>y.date?-1:(+y.no||0)-(+x.no||0)});
+  ids.forEach(function(id){var r=S.races[id];
+    var hit=!q||(rl(r)+' '+r.name).toLowerCase().indexOf(q)>=0||r.horses.some(function(o){return (o.name||'').toLowerCase().indexOf(q)>=0});
+    if(!hit)return;
+    h+='<div class="card"><div class="row" style="margin-bottom:2px"><b>'+esc(rl(r)+' '+r.name)+'</b><button class="btn" data-open="'+id+'" style="margin-left:auto">開く</button></div>';
+    r.horses.forEach(function(o){var t=total(o);h+='<button class="chip" data-hn="'+esc(o.name)+'" data-rid="'+id+'">'+esc(o.n)+' '+esc(o.name||'—')+' '+mkS(o.mk)+' '+(MAXS-t[0])+'/'+MAXS+'</button>'});
+    h+=(r.horses.length?'<div class="hint">馬名をタップで過去記録と比較</div>':'<div class="hint">馬が未登録</div>')+'</div>'});
+  $('hl2').innerHTML=h||'<div class="hint">該当する記録がありません</div>'}
+$('hq').oninput=histList;
+$('bx').onclick=function(){var t=$('bt');t.value=JSON.stringify(S);t.focus();t.select();try{document.execCommand('copy')}catch(e){}};
+$('bi').onclick=function(){var b=this;try{var d=JSON.parse($('bt').value),n=0;Object.keys(d.races||{}).forEach(function(id){S.races[id]=d.races[id];S.races[id].horses.forEach(normS);n++});save();all();histList();$('bt').value='';b.textContent=n+'件読み込みました'}catch(e){b.textContent='形式エラー'}setTimeout(function(){b.textContent='読み込み（追加）'},2500)};
+$('p3').onclick=function(e){var t=e.target;if(t.dataset.open){S.cur=t.dataset.open;save();all();tab(1)}else if(t.dataset.hn!==undefined){showHist(t.dataset.hn,t.dataset.rid)}};
+$('hp').onclick=function(e){if(e.target.id==='hc')this.className='card hide'};
+$('tb').onchange=hlist;
+function tab(n){[[1,'p1','t1'],[2,'p2','t2'],[3,'p3','t3']].forEach(function(a){$(a[1]).className=n==a[0]?'':'hide';$(a[2]).className=n==a[0]?'on':''});if(n==3)histList();window.scrollTo(0,0)}
+$('t1').onclick=function(){tab(1)};$('t2').onclick=function(){tab(2)};$('t3').onclick=function(){tab(3)};
+
+Object.keys(S.races).forEach(function(id){S.races[id].horses.forEach(function(o){normS(o)})});
+if(!S.cur||!S.races[S.cur]){var k=Object.keys(S.races);if(k.length)S.cur=k[0];else newRace()}
+guide();all();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
+</body>
+</html>
